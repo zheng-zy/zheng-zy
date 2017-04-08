@@ -40,6 +40,7 @@
 <li>尽量避免在WHERE子句中使用!=或&lt;&gt;操作符，否则将引擎放弃使用索引而进行全表扫描</li>
 <li>对于连续数值，使用BETWEEN不用IN：SELECT id FROM t WHERE num BETWEEN 1 AND 5</li>
 <li>列表数据不要拿全表，要使用LIMIT来分页，每页数量也不要太大</li>
+<li>连表查询采用<code>left join on</code>，而不用<code>where =</code>，因为on是经过mysql底层优化 </li>
 <li><p>最左前缀匹配原则，非常重要的原则，MySQL会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配，比如<code>a = 1 and b = 2 and c &gt; 3 and d = 4</code> 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。</p>
 </li>
 <li><p>尽量选择区分度高的列作为索引,区分度的公式是count(distinct col)/count(*)，表示字段不重复的比例，比例越大我们扫描的记录数越少，唯一键的区分度是1，而一些状态、性别字段可能在大数据面前区分度就是0，那可能有人会问，这个比例有什么经验值吗？使用场景不同，这个值也很难确定，一般需要join的字段我们都要求是0.1以上，即平均1条扫描10条记录。</p>
@@ -127,7 +128,7 @@
 <li>升级硬件</li>
 </ol>
 <p>Scale up，这个不多说了，根据MySQL是CPU密集型还是I/O密集型，通过提升CPU和内存、使用SSD，都能显著提升MySQL性能</p>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/posts/32375/" data-id="cj18n500z000ywnu5v1rulsow" class="article-share-link">分享到</a><div class="tags"><a href="/tags/MySQL/">MySQL</a></div><div class="post-nav"><a href="/posts/46179/" class="pre">notepad++配置python环境</a><a href="/posts/59386/" class="next">maven打包获取svn版本号</a></div><div id="disqus_thread"><script>var disqus_shortname = 'zhengzy';
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/posts/32375/" data-id="cj18n9cvy000y0hu5zoqgfj4v" class="article-share-link">分享到</a><div class="tags"><a href="/tags/MySQL/">MySQL</a></div><div class="post-nav"><a href="/posts/46179/" class="pre">notepad++配置python环境</a><a href="/posts/59386/" class="next">maven打包获取svn版本号</a></div><div id="disqus_thread"><script>var disqus_shortname = 'zhengzy';
 var disqus_identifier = 'posts/32375/';
 var disqus_title = 'mysql单表优化方案';
 var disqus_url = 'http://yoursite.com/posts/32375/';
