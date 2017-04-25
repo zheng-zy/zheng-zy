@@ -29,4 +29,4 @@ branches:
     - blog-source
 env:
  global:
-   - GH_REF＝github.com/zheng-zy/zheng-zy.github.io.git
+   - GH_REF=github.com/zheng-zy/zheng-zy.github.io.git
