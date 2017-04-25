@@ -6,9 +6,11 @@ install:
   - npm install
 
 
-#before_script:
+before_script:
  # - npm install -g gulp
-
+  - npm install hexo-renderer-jade --save
+  - npm install -g cnpm --registry=https://registry.npm.taobao.org
+  - cnpm install hexo-renderer-sass --save
 script:
   - hexo g
 
