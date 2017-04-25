@@ -17,10 +17,11 @@ script:
 
 after_script:
   - cd ./public
+  - ls
   - git init
   - git config user.name "zhezhiyong"
   - git config user.email "zhezhiyong@163.com"
-  - git add .
+  - git add *
   - git commit -m "Update docs"
   - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
 # E: Build LifeCycle
