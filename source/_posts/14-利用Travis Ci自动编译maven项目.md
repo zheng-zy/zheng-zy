@@ -10,7 +10,8 @@ date: 2017-04-28 19:40:53
 ---
 
 ### 利用Travis Ci自动编译maven项目
-    Travis Ci目前只支持github上面的项目，所以首先要有一个github账号，并且在上面建立一个项目，用来测试。项目建立之后要创建一个分支，这里取名为test，这里我们只演示从test分支打包之后上传到master分支。
+    Travis Ci目前只支持github上面的项目，所以首先要有一个github账号，并且在上面建立一个项目，用来测试。
+    项目建立之后要创建一个分支，这里取名为test，这里我们只演示从test分支打包之后上传到master分支。
     
 ### Travis Ci设置
 
@@ -19,6 +20,7 @@ date: 2017-04-28 19:40:53
 * 设置相关选项参数
 
 ![image](http://git.oschina.net/zhengzy/md/raw/master/pic/travis-ci/1.png)
+
 
 > Build only if .travis.yml is present：是只有在.travis.yml文件中配置的分支改变了才构建 
 
@@ -35,7 +37,7 @@ date: 2017-04-28 19:40:53
 ### test分支文件
 
 * 拷贝一个可以正常编译的maven工程
-* 编写.travis.yml文件，(yml格式校验)[http://lint.travis-ci.org/]，内容如下
+* 编写.travis.yml文件，[yml格式校验](http://lint.travis-ci.org/)，内容如下
 ```.travis.yml
 language: java
 
@@ -84,9 +86,9 @@ git push
 
 * 在github仓库查看打包的文件
 
-### demo
+### demo下载
 
-* (github)[https://github.com/zheng-zy/test-travis-ci-maven.git]
+* [github](https://github.com/zheng-zy/test-travis-ci-maven.git)
 
 
 
