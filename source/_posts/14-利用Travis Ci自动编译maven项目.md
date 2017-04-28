@@ -10,8 +10,8 @@ date: 2017-04-28 19:40:53
 ---
 
 ### 利用Travis Ci自动编译maven项目
-    Travis Ci目前只支持github上面的项目，所以首先要有一个github账号，并且在上面建立一个项目，用来测试。
-    项目建立之后要创建一个分支，这里取名为test，这里我们只演示从test分支打包之后上传到master分支。
+
+> Travis Ci目前只支持github上面的项目，所以首先要有一个github账号，并且在上面建立一个项目，用来测试。项目建立之后要创建一个分支，这里取名为test，这里我们只演示从test分支打包之后上传到master分支。
     
 ### Travis Ci设置
 
