@@ -50,6 +50,7 @@ zoo.cfg
 tickTime=2000
 initLimit=10
 syncLimit=5
+# 集群需要修改Dir/LogDir/port这三个参数
 dataDir=/root/dev/server001/data
 dataLogDir=/root/dev/server001/logs
 clientPort=2181
