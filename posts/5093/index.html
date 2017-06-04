@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="我将在茫茫人海中寻访我唯一之灵魂伴侣。得之，我幸；不得，我命。"><title>spring mybatis 配置多数据源 | 苏陌年的小站</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">spring mybatis 配置多数据源</h1><a id="logo" href="/.">苏陌年的小站</a><p class="description">记录，为了成为更好的自己</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">spring mybatis 配置多数据源</h1><div class="post-meta">Jun 2, 2017<span> | </span><span class="category"><a href="/categories/tech/">tech</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="posts/5093/" href="/posts/5093/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h3 id="spring-mybatis-配置多数据源"><a href="#spring-mybatis-配置多数据源" class="headerlink" title="spring mybatis 配置多数据源"></a>spring mybatis 配置多数据源</h3><ul>
+<li>idea2016.3.2</li>
+<li>jdk8</li>
+<li>maven3.3.9</li>
+</ul>
+<h3 id="sql"><a href="#sql" class="headerlink" title="sql"></a>sql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE /*!32312 IF NOT EXISTS*/`springbootmaster` /*!40100 DEFAULT CHARACTER SET utf8 */;</div><div class="line"></div><div class="line">USE `springbootmaster`;</div><div class="line"></div><div class="line">DROP TABLE IF EXISTS `tbl_user`;</div><div class="line"></div><div class="line">CREATE TABLE `tbl_user` (</div><div class="line">  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT &apos;id&apos;,</div><div class="line">  `name` varchar(50) NOT NULL COMMENT &apos;姓名&apos;,</div><div class="line">  `age` int(10) NOT NULL COMMENT &apos;年龄&apos;,</div><div class="line">  `remark` varchar(50) DEFAULT NULL COMMENT &apos;备注&apos;,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;</div><div class="line"></div><div class="line">insert  into `tbl_user`(`id`,`name`,`age`,`remark`) values (1,&apos;小明&apos;,27,&apos;儿童节&apos;);</div><div class="line"></div><div class="line">CREATE DATABASE /*!32312 IF NOT EXISTS*/`springbootcluster` /*!40100 DEFAULT CHARACTER SET utf8 */;</div><div class="line"></div><div class="line">USE `springbootcluster`;</div><div class="line"></div><div class="line">DROP TABLE IF EXISTS `tbl_address`;</div><div class="line"></div><div class="line">CREATE TABLE `tbl_address` (</div><div class="line">  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT &apos;id&apos;,</div><div class="line">  `address` varchar(200) NOT NULL COMMENT &apos;收货地址&apos;,</div><div class="line">  `remark` varchar(200) DEFAULT NULL COMMENT &apos;备注&apos;,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;</div><div class="line"></div><div class="line">insert  into `tbl_address`(`id`,`address`,`remark`) values (1,&apos;福州市仓山区橘园创意广场&apos;,&apos;地址1&apos;);</div><div class="line">insert  into `tbl_address`(`id`,`address`,`remark`) values (2,&apos;福州市闽侯县博士后购物广场&apos;,&apos;地址2&apos;);</div></pre></td></tr></table></figure>
+<h3 id="配置依赖pom-xml"><a href="#配置依赖pom-xml" class="headerlink" title="配置依赖pom.xml"></a>配置依赖pom.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">server:</div><div class="line">  port: 7000</div><div class="line">  context-path: /</div><div class="line">## master 数据源配置</div><div class="line">master:</div><div class="line">  datasource:</div><div class="line">    url: jdbc:mysql://127.0.0.1:3306/springbootmaster?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false</div><div class="line">    user: root</div><div class="line">    password: 666666</div><div class="line">    driverClass: com.mysql.jdbc.Driver</div><div class="line"></div><div class="line">## cluster 数据源配置</div><div class="line">cluster:</div><div class="line">  datasource:</div><div class="line">    url: jdbc:mysql://127.0.0.1:3306/springbootcluster?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false</div><div class="line">    user: root</div><div class="line">    password: 666666</div><div class="line">    driverClass: com.mysql.jdbc.Driver</div></pre></td></tr></table></figure>
+<h3 id="DruidDataSource配置参数"><a href="#DruidDataSource配置参数" class="headerlink" title="DruidDataSource配置参数"></a>DruidDataSource配置参数</h3><table>
+<thead>
+<tr>
+<th>配置</th>
+<th>缺省值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td></td>
+<td>配置这个属性的意义在于，如果存在多个数据源，监控的时候可以通过名字来区分开来。 如果没有配置，将会生成一个名字，格式是：”DataSource-“ + System.identityHashCode(this)</td>
+</tr>
+<tr>
+<td>jdbcUrl</td>
+<td></td>
+<td>连接数据库的url，不同数据库不一样。例如：mysql : jdbc：mysql://127.0.0.1:3306/test，oracle : jdbc:oracle:thin:@127.0.0.1:1521:test</td>
+</tr>
+<tr>
+<td>username</td>
+<td></td>
+<td>连接数据库的用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td></td>
+<td>连接数据库的密码</td>
+</tr>
+<tr>
+<td>driverClassName</td>
+<td>根据url自动识别</td>
+<td>这一项可配可不配，如果不配置druid会根据url自动识别dbType，然后选择相应的driverClassName(建议配置下)</td>
+</tr>
+<tr>
+<td>initialSize</td>
+<td>0</td>
+<td>初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时</td>
+</tr>
+<tr>
+<td>maxActive</td>
+<td>8</td>
+<td>最大连接池数量</td>
+</tr>
+<tr>
+<td>maxIdle</td>
+<td>8</td>
+<td>已经不再使用，配置了也没效果</td>
+</tr>
+<tr>
+<td>minIdle</td>
+<td></td>
+<td>最小连接池数量</td>
+</tr>
+<tr>
+<td>maxWait</td>
+<td></td>
+<td>获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，如果需要可以通过配置useUnfairLock属性为true使用非公平锁。</td>
+</tr>
+<tr>
+<td>poolPreparedStatements</td>
+<td>false</td>
+<td>是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。</td>
+</tr>
+<tr>
+<td>maxOpenPreparedStatements</td>
+<td>-1</td>
+<td>要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100</td>
+</tr>
+<tr>
+<td>validationQuery</td>
+<td></td>
+<td>用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。</td>
+</tr>
+<tr>
+<td>testOnBorrow</td>
+<td>true</td>
+<td>申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。</td>
+</tr>
+<tr>
+<td>testOnReturn</td>
+<td>false</td>
+<td>归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能</td>
+</tr>
+<tr>
+<td>testWhileIdle</td>
+<td>false</td>
+<td>建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。</td>
+</tr>
+<tr>
+<td>timeBetweenEvictionRunsMillis</td>
+<td></td>
+<td>有两个含义： Destroy线程会检测连接的间隔时间，testWhileIdle的判断依据，详细看testWhileIdle属性的说明</td>
+</tr>
+<tr>
+<td>numTestsPerEvictionRun</td>
+<td></td>
+<td>不再使用，一个DruidDataSource只支持一个EvictionRun</td>
+</tr>
+<tr>
+<td>minEvictableIdleTimeMillis</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>connectionInitSqls</td>
+<td></td>
+<td>物理连接初始化的时候执行的sql</td>
+</tr>
+<tr>
+<td>exceptionSorter</td>
+<td>根据dbType自动识别</td>
+<td>当数据库抛出一些不可恢复的异常时，抛弃连接</td>
+</tr>
+<tr>
+<td>filters</td>
+<td></td>
+<td>属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall</td>
+</tr>
+<tr>
+<td>proxyFilters</td>
+<td></td>
+<td>类型是List<com.alibaba.druid.filter.filter>，如果同时配置了filters和proxyFilters，是组合关系，并非替换关系</com.alibaba.druid.filter.filter></td>
+</tr>
+</tbody>
+</table>
+<h3 id="配置mybatis-generator"><a href="#配置mybatis-generator" class="headerlink" title="配置mybatis generator"></a>配置mybatis generator</h3><p><a href="http://zhengzy.oschina.io/posts/51603/" target="_blank" rel="external">mybatis generator</a></p>
+<h3 id="注解说明"><a href="#注解说明" class="headerlink" title="注解说明"></a>注解说明</h3><ul>
+<li>@Configuration 用@Configuration注解该类，等价与XML中配置beans；用@Bean标注方法等价于XML中配置bean。</li>
+<li>@Primary 默认数据源</li>
+<li>@MapperScan 扫描mapper</li>
+</ul>
+<h3 id="配置数据源类"><a href="#配置数据源类" class="headerlink" title="配置数据源类"></a>配置数据源类</h3><ul>
+<li><p>master数据源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * &lt;p&gt;master数据源&lt;/p&gt;</div><div class="line"> * Created by zhezhiyong@163.com on 2017/6/1.</div><div class="line"> */</div><div class="line">@Configuration</div><div class="line">@MapperScan(basePackages = MasterDataSourceConfig.PACKAGE, sqlSessionFactoryRef = &quot;masterSqlSessionFactory&quot;)</div><div class="line">@ConfigurationProperties(prefix = &quot;master.datasource&quot;)</div><div class="line">@Data</div><div class="line">public class MasterDataSourceConfig &#123;</div><div class="line">    static final String PACKAGE = &quot;com.example.demo.mapper.master&quot;;</div><div class="line">    static final String MAPPER_LOCATION = &quot;classpath:mapper/master/*.xml&quot;;</div><div class="line"></div><div class="line">    private String url;</div><div class="line">    private String user;</div><div class="line">    private String password;</div><div class="line">    private String driverClass;</div><div class="line"></div><div class="line">    @Bean(name = &quot;masterDataSource&quot;)</div><div class="line">    @Primary</div><div class="line">    public DataSource masterDataSource() &#123;</div><div class="line">        DruidDataSource dataSource = new DruidDataSource();</div><div class="line">        dataSource.setDriverClassName(driverClass);</div><div class="line">        dataSource.setUrl(url);</div><div class="line">        dataSource.setUsername(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line">        return dataSource;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean(name = &quot;masterTransactionManager&quot;)</div><div class="line">    @Primary</div><div class="line">    public DataSourceTransactionManager masterTransactionManager() &#123;</div><div class="line">        return new DataSourceTransactionManager(masterDataSource());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean(name = &quot;masterSqlSessionFactory&quot;)</div><div class="line">    @Primary</div><div class="line">    public SqlSessionFactory masterSqlSessionFactory(@Qualifier(&quot;masterDataSource&quot;) DataSource masterDataSource)</div><div class="line">            throws Exception &#123;</div><div class="line">        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();</div><div class="line">        sessionFactory.setDataSource(masterDataSource);</div><div class="line">        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()</div><div class="line">                .getResources(MasterDataSourceConfig.MAPPER_LOCATION));</div><div class="line">        return sessionFactory.getObject();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>cluster数据源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * &lt;p&gt;cluster数据源&lt;/p&gt;</div><div class="line"> * Created by zhezhiyong@163.com on 2017/6/1.</div><div class="line"> */</div><div class="line">@Configuration</div><div class="line">@MapperScan(basePackages = ClusterDataSourceConfig.PACKAGE, sqlSessionFactoryRef = &quot;clusterSqlSessionFactory&quot;)</div><div class="line">@ConfigurationProperties(prefix = &quot;cluster.datasource&quot;)</div><div class="line">@Data</div><div class="line">public class ClusterDataSourceConfig &#123;</div><div class="line"></div><div class="line">    static final String PACKAGE = &quot;com.example.demo.mapper.cluster&quot;;</div><div class="line">    static final String MAPPER_LOCATION = &quot;classpath:mapper/cluster/*.xml&quot;;</div><div class="line"></div><div class="line">    private String url;</div><div class="line">    private String user;</div><div class="line">    private String password;</div><div class="line">    private String driverClass;</div><div class="line"></div><div class="line">    @Bean(name = &quot;clusterDataSource&quot;)</div><div class="line">    public DataSource clusterDataSource() &#123;</div><div class="line">        DruidDataSource dataSource = new DruidDataSource();</div><div class="line">        dataSource.setDriverClassName(driverClass);</div><div class="line">        dataSource.setUrl(url);</div><div class="line">        dataSource.setUsername(user);</div><div class="line">        dataSource.setPassword(password);</div><div class="line">        return dataSource;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean(name = &quot;clusterTransactionManager&quot;)</div><div class="line">    public DataSourceTransactionManager clusterTransactionManager() &#123;</div><div class="line">        return new DataSourceTransactionManager(clusterDataSource());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean(name = &quot;clusterSqlSessionFactory&quot;)</div><div class="line">    public SqlSessionFactory clusterSqlSessionFactory(@Qualifier(&quot;clusterDataSource&quot;) DataSource clusterDataSource)</div><div class="line">            throws Exception &#123;</div><div class="line">        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();</div><div class="line">        sessionFactory.setDataSource(clusterDataSource);</div><div class="line">        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()</div><div class="line">                .getResources(ClusterDataSourceConfig.MAPPER_LOCATION));</div><div class="line">        return sessionFactory.getObject();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用generator生成dao，mapper，mapperxml文件，并在mapper 接口文件上添加@Mapper注解</p>
+</li>
+</ul>
+<h3 id="编写service"><a href="#编写service" class="headerlink" title="编写service"></a>编写service</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Service</div><div class="line">public class UserService &#123;</div><div class="line"></div><div class="line">    @Resource</div><div class="line">    private UserMapper userMapper;</div><div class="line">    @Resource</div><div class="line">    private AddressMapper addressMapper;</div><div class="line"></div><div class="line"></div><div class="line">    public User find(int id) &#123;</div><div class="line">        User user = userMapper.selectByPrimaryKey(1);</div><div class="line">        Address address = addressMapper.selectByPrimaryKey(1);</div><div class="line">        Address address2 = addressMapper.selectByPrimaryKey(2);</div><div class="line">        List&lt;Address&gt; addressList = new ArrayList&lt;&gt;();</div><div class="line">        addressList.add(address);</div><div class="line">        addressList.add(address2);</div><div class="line">        user.setAddresses(addressList);</div><div class="line">        return user;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="编写测试类"><a href="#编写测试类" class="headerlink" title="编写测试类"></a>编写测试类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@RunWith(SpringRunner.class)</div><div class="line">@SpringBootTest</div><div class="line">public class ApplicationTests &#123;</div><div class="line"></div><div class="line">	@Resource</div><div class="line">	private UserService userService;</div><div class="line"></div><div class="line">	@Test</div><div class="line">	public void contextLoads() &#123;</div><div class="line">		User user = userService.find(1);</div><div class="line">		System.out.println(&quot;user = &quot; + JSON.toJSONString(user));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">user = &#123;</div><div class="line">	&quot;addresses&quot; : [&#123;</div><div class="line">			&quot;address&quot; : &quot;福州市仓山区橘园创意广场&quot;,</div><div class="line">			&quot;id&quot; : 1,</div><div class="line">			&quot;remark&quot; : &quot;地址1&quot;</div><div class="line">		&#125;, &#123;</div><div class="line">			&quot;address&quot; : &quot;福州市闽侯县博士后购物广场&quot;,</div><div class="line">			&quot;id&quot; : 2,</div><div class="line">			&quot;remark&quot; : &quot;地址2&quot;</div><div class="line">		&#125;</div><div class="line">	],</div><div class="line">	&quot;age&quot; : 27,</div><div class="line">	&quot;id&quot; : 1,</div><div class="line">	&quot;name&quot; : &quot;小明&quot;,</div><div class="line">	&quot;remark&quot; : &quot;儿童节&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="github地址"><a href="#github地址" class="headerlink" title="github地址"></a>github地址</h3><p><a href="https://github.com/zheng-zy/springboot-mybatis-druid-mutil-datasource.git" target="_blank" rel="external">代码地址</a></p>
+<h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明"></a>版权声明</h3><p>作者：苏陌年<br>出处：<a href="http://www.zhengzy.top/" target="_blank" rel="external">http://www.zhengzy.top/</a><br>版权所有，欢迎保留原文链接进行转载：)</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yoursite.com/posts/5093/" data-id="cj3ix2hns000h6au5jmor22c6" class="article-share-link">分享到</a><div class="tags"><a href="/tags/Java/">Java</a></div><div class="post-nav"><a href="/posts/51603/" class="pre">idea配置mybatis generator代码生成</a></div><div id="disqus_thread"><script>var disqus_shortname = 'zhengzy';
+var disqus_identifier = 'posts/5093/';
+var disqus_title = 'spring mybatis 配置多数据源';
+var disqus_url = 'http://yoursite.com/posts/5093/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//zhengzy.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Shadowsocks/" style="font-size: 15px;">Shadowsocks</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Soft/" style="font-size: 15px;">Soft</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Travis-Ci/" style="font-size: 15px;">Travis-Ci</a> <a href="/tags/Zookeeper/" style="font-size: 15px;">Zookeeper</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/MongoDB/" style="font-size: 15px;">MongoDB</a> <a href="/tags/运维/" style="font-size: 15px;">运维</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/开发环境/" style="font-size: 15px;">开发环境</a> <a href="/tags/架构师/" style="font-size: 15px;">架构师</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/posts/5093/">spring mybatis 配置多数据源</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/51603/">idea配置mybatis generator代码生成</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/2804/">利用Travis Ci自动编译maven项目</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/23656/">hadoop入门1——hadoop集群环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/10398/">maven插件ssh上传项目到部署服务器</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/54521/">常用的互联网开源软件清单</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/59773/">spring-retry异常重试机制</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/37956/">docker入门</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/39140/">python获取命令行参数</a></li><li class="post-list-item"><a class="post-list-link" href="/posts/22055/">java一些好用的工具库</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//zhengzy.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://www.haomwei.com/technology/maupassant-hexo.html#主题安装" title="hexo简洁主题" target="_blank">hexo简洁主题</a><ul></ul><a href="http://www.zhengzy.top/" title="demo" target="_blank">demo</a><ul></ul><a href="http://www.zhengzy.top/" title="demo2" target="_blank">demo2</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">苏陌年的小站.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a7ea5b4b6dc5f82939ce5dd99e4efe67";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
